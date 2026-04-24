@@ -3,12 +3,88 @@
 <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
+	<style>
+		h1 {
+			white-space: pre-line;
+		}
+	</style>
 </head>
 
 <body>
+
+<h1 id="leaderboard_display">
+	Highscore
+	</h1>
+
 <canvas id="gameCanvas" width="800" height="600"></canvas>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.43.4/dist/umd/supabase.min.js"></script>
+
 <script>
+			const supabasePublicClient = supabase.createClient("https://embdvqvriogaahmdyrja.supabase.co", "sb_publishable_qfTLOVPhdQ8ryP25qt6RyQ_5ZLnwL0f");
+
+			syncData()
+			let leaderBoard = []
+
+			function syncData(){
+			(async () => {
+
+					const {data} = await supabasePublicClient.from("Bounce-Leaderboard").select("*").order('score', { ascending: false })
+
+					console.log(data)
+
+					leaderBoard = data
+
+					updateDisplay()
+
+        })()
+
+
+			}
+	
+	function updateData(name, score){
+		
+		(async () => {
+
+			const entry = leaderBoard.find(p => p.name === name);
+			
+			console.log(entry)
+			entry.score = score
+
+
+			const {error} = await supabasePublicClient.from('Bounce-Leaderboard').update({ score: score }).eq('name', name)
+
+			console.log(error)
+			console.log("Updated")
+			
+			updateDisplay()
+		})()
+
+	}
+	function createData(name, score){
+		
+		(async () => {
+			const { error } = await supabasePublicClient.from('Bounce-Leaderboard').insert({name: name, score: score })
+
+			syncData()
+		})()
+	}
+
+
+			function updateDisplay(){
+				document.getElementById("leaderboard_display").textContent = "Highscores: \n"
+				for (let i = 0; i < leaderBoard.length; i++) {
+  				console.log("The number is " + i + "<br>");
+					document.getElementById("leaderboard_display").textContent += leaderBoard[i].name + ": " + leaderBoard[i].score + "\n"
+				}
+
+			}
+
+var score = 0;
+var playerName = prompt("What is your name?")
+
+	
 var ballX = 75;
 var ballY = 75;
 var ballSpeedX = 5;
@@ -47,6 +123,20 @@ function updateMousePos(evt) {
     ballY = mouseY;
     ballSpeedX = 4;
     ballSpeedY = -4;*/
+}
+
+function gameOver(){
+	console.log("Score: " + score)
+
+	if (leaderBoard.find(p => p.name === playerName)?.score < score) {
+		updateData(playerName, score)
+	} else if (!leaderBoard.find(p => p.name === playerName)){
+		createData(playerName, score)
+	}
+	score = 0;
+
+	ballReset();
+  brickReset();
 }
 
 function brickReset() {
@@ -98,8 +188,8 @@ function ballMove() {
         ballSpeedY *= -1
     }
     if(ballY > canvas.height) { //bottom
-        ballReset();
-        brickReset();
+				gameOver();
+        
 
     }
 }
@@ -126,6 +216,7 @@ function ballBrickHandeling() {
             brickGrid[brickIndexUnderBall] = false;
             bricksLeft--;
             console.log(bricksLeft);
+				 		score ++;
             
             var prevBallX = ballX - ballSpeedX
             var prevBallY = ballY - ballSpeedY

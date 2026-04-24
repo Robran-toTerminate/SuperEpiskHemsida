@@ -13,15 +13,25 @@
 }
 		h1 {
 			position: relative;
-			left: 150px;
+			document.getElementById("soundTrack")play();left: 150px;
 			background-color: 'red';
 			color: #ffe100;
 			font-family: "Bangers";
 			font-stretch: expanded;
 		}
+		button {
+			background-color: #ffe100;
+			position: absolute;
+			left: 200px;
+			top: 500px;
+		}
 
 	</style>9
+	<audio volume preload='all' src='sounds/02-Interlude.mp3' loop id="soundTrack"></audio>;
+
 </head>
+	<body>
+
 	<p>
 		Hylics
 	</p>
@@ -35,6 +45,10 @@
 	<h1>
 		In the dark earth
 	</h1>
+	<button onclick="playMusic()" id="musicStarter">Music?</button>
+		<!-- Add so that this melts like in hylics xyz
+
+
 
 	<!--<img src="gifs/dance.gif">-->
 	<nav>
@@ -42,4 +56,22 @@
 	</nav>
 
 	<a href="scripts/studs.html">Gibby gibbar</a>
+
+
+	<script>
+		function playMusic(){
+  		document.getElementById("soundTrack").play();
+			const element = document.getElementById("musicStarter");
+    	element.style.display = 'none';
+
+			console.log("Musiceeee");
+			window.onload = function() {
+				console.log("Hi")
+				playMusic();};
+  }
+
+
+	</script>
+
+	</body>
 </html>
