@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>Superepiskhemsida</title>
+<style>
+body {background: linear-gradient(
+    to bottom, #03ecfc 0%, #03ecfc 50%, #00f020 50%, #000000 100%);}
+h1   {color: blue;}
+p    {color: red;}
+h2 {
+   position: relative;
+top offset:100000px;
+bottom offset:10px;
+right offset:15px;
+left offset:15px;
+ }
+</style>
+</head>
+<h1>Theo är inte bättre än rännar</h1>
+<p>Wabbalubbadubdub!</p>
+
+<audio preload='none' src="horse.mp3" id="myAudio"></audio>
+
+<audio controls volume preload='none' src='http://www.sousound.com/music/healing/healing_01.mp3'></audio>;
+
+<p>	</p>
+<button onclick="get_best_person()">Vem är bättre?</button>
+<button onclick="Radomthingy()" style="background:red; border-radius:10px;height:50px;">Subscripbe</button>
+
+<p>	</p>
+<img src="https://hips.hearstapps.com/hmg-prod/images/summer-flowers-sunflower-1648478429.jpg?crop=0.534xw:1.00xh;0.416xw,0" alt="Flowers in Chania"
+		 height = 500px; style = "offset-position: bottom 10px right 200px;;">
+
+<h2>
+	Här borta
+	</h2>
+
+<script>
+	//input = prompt("Do you want to know who is better?")
+	//if (input == "Ja"){console.log("Robin är bättre än theo")}
+
+function get_best_person() {
+	playBop()
+	console.log("Robin")
+}
+
+function Radomthingy() {
+	num = Math.floor(Math.random()*2)
+
+	if (num == 1) {
+		console.log("Rännar är bäst")
+	} else {
+		console.log("Theo är bäst")
+	}
+}
+function playBop(){
+  document.getElementById("myAudio").play();
+
+	console.log("WALLL")
+  }
+
+
+</script>
+
+</html>
