@@ -1,0 +1,85 @@
+<DOCTYPE html>
+<html lang="en">
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+</head>
+
+<body>
+<canvas id="gameCanvas" width="1500" height="600"></canvas>
+
+<script>
+
+var currentX = 0
+var distanceMoved = 0.01
+var ofset = 0
+var otherX = currentX
+var height = 100
+var width = -100
+
+window.onload = function() {
+    canvas = document.getElementById('gameCanvas');
+    canvasContext = canvas.getContext('2d')
+    colorRect(0,0, canvas.width, canvas.height, 'black')
+
+    var framesPerSecond = 200;
+    setInterval(drawAll, 1000/framesPerSecond);
+
+}
+
+function drawAll() {
+	var otherX = currentX + ofset
+
+	colorRect(currentX*100,curve(otherX, 1)*100 + 300, width,height, 'red')
+	colorRect(currentX*100,curve(currentX, 2)*100 + 300, width,height, 'green')
+	colorRect(currentX*100,curve(currentX, 3)*100 + 300, width,height, 'blue')
+   colorRect(currentX*100 + 10,0, 300, canvas.height, 'black')
+
+
+	currentX += distanceMoved
+	console.log(currentX)
+
+	if (currentX >= canvas.width/100) {
+		currentX = -5
+	}
+}
+
+function curve(ys, con) {
+	
+	if (con == 1) {
+		return Math.cos(ys);
+		
+	} else if (con == 2){
+
+		return Math.sin(ys);
+	} else {
+
+		return Math.tan(ys)
+	}
+	
+}
+
+
+function colorRect(topLeftX,topLeftY, boxWidth, boxHeight, fillColor) {
+    canvasContext.fillStyle = fillColor;
+    canvasContext.fillRect(topLeftX,topLeftY, boxWidth,boxHeight)
+
+}
+
+function colorCircle(centerX,centerY, radius, fillColor) {
+    canvasContext.fillStyle = fillColor;
+    canvasContext.beginPath();
+    canvasContext.arc(centerX,centerY, radius, 0,Math.PI*2, true);
+    canvasContext.fill();
+}
+    
+function colorText(showWords, textX,textY, fillColor) {
+    canvasContext.fillStyle = fillColor;
+    canvasContext.fillText(showWords, textX,textY);
+    
+}
+    
+</script>
+
+</body>
+</html>
