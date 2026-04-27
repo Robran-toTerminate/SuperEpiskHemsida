@@ -26,7 +26,7 @@
 	Current Score:
 	</h1>
 
-<nav> HEllo
+<nav> Latest patch 27.1354
 <h1 id="leaderboard_display">
 	Highscore
 	</h1>
@@ -95,6 +95,8 @@
 
 var score = 0;
 var playerName = prompt("What is your name?")
+
+var lastWallBounce = 0
 
 	
 var ballX = 75;
@@ -191,11 +193,14 @@ function ballMove() {
     ballX += ballSpeedX;
     ballY += ballSpeedY;
 
-    if(ballX < 0) { //left
+    if(ballX < 0 && lastWallBounce != "left") { //left
         ballSpeedX *= -1
+				lastWallBounce = "left"
     }
-    if(ballX > canvas.width) { //right
+    if(ballX > canvas.width && lastWallBounce != "right") { //right
         ballSpeedX *= -1
+				lastWallBounce = "right"
+
     }
     if(ballY < 0) { //top
         ballSpeedY *= -1
@@ -273,6 +278,7 @@ function ballPaddleHandeling() {
        if(brickGrid[brickIndexUnderBall]) {
             brickGrid[brickIndexUnderBall] = false;
             ballSpeedY *= -1;
+				 		lastWallBounce = "paddle";
             }
            
        }
@@ -288,6 +294,7 @@ function ballPaddleHandeling() {
         ballX < paddleRightEdgeX) { // left of the right side of the paddle
         
         ballSpeedY *= -1;
+				lastWallBounce = "paddle";
         
         var centerOfPaddleX = paddleX + PADDLE_WIDTH/2;
         var ballDistFromPaddleCenterX = ballX - centerOfPaddleX;
