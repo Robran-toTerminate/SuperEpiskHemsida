@@ -94,7 +94,8 @@
 			}
 
 var score = 0;
-var playerName = prompt("What is your name?")
+var playerName = prompt("What is your name?"); if (playerName == null) {playerName = "Anonymous"};
+
 
 var lastWallBounce = 0
 
@@ -248,12 +249,14 @@ function ballBrickHandeling() {
                 
                 if(isBrickAtColRow(prevBrickCol, prevBrickRow) == false) {
                     ballSpeedX *= -1;
+										lastWallBounce = "brick";
                     bothTestsFailed = false;
                 }
             }
             if(prevBrickRow != ballBrickRow) {                    
                 if(isBrickAtColRow(ballBrickCol, prevBrickRow) == false) {
                     ballSpeedY *= -1;
+										lastWallBounce = "brick";
                     bothTestsFailed = false;
                 }
             }
