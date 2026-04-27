@@ -4,17 +4,35 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
 	<style>
+		body {
+			background-color : "black";
+		}
+		
 		h1 {
 			white-space: pre-line;
 		}
+		nav {
+			position: absolute;
+			left: 900px;
+			top: 150px;
+		}
+
 	</style>
 </head>
 
 <body>
 
+<h1 id="score_display">
+	Current Score:
+	</h1>
+
+<nav> HEllo
 <h1 id="leaderboard_display">
 	Highscore
 	</h1>
+
+</nav>
+
 
 <canvas id="gameCanvas" width="800" height="600"></canvas>
 
@@ -47,18 +65,12 @@
 		
 		(async () => {
 
-			const entry = leaderBoard.find(p => p.name === name);
-			
-			console.log(entry)
-			entry.score = score
-
-
 			const {error} = await supabasePublicClient.from('Bounce-Leaderboard').update({ score: score }).eq('name', name)
 
 			console.log(error)
 			console.log("Updated")
 			
-			updateDisplay()
+			syncData();
 		})()
 
 	}
@@ -82,7 +94,7 @@
 			}
 
 var score = 0;
-var playerName = prompt("What is your name?")
+var playerName = "33"; <!--prompt("What is your name?")
 
 	
 var ballX = 75;
@@ -130,10 +142,11 @@ function gameOver(){
 
 	if (leaderBoard.find(p => p.name === playerName)?.score < score) {
 		updateData(playerName, score)
-	} else if (!leaderBoard.find(p => p.name === playerName)){
+	} else if (!leaderBoard.find(p => p.name == playerName)){
 		createData(playerName, score)
 	}
 	score = 0;
+	document.getElementById("score_display").textContent = "Game over"
 
 	ballReset();
   brickReset();
@@ -217,6 +230,7 @@ function ballBrickHandeling() {
             bricksLeft--;
             console.log(bricksLeft);
 				 		score ++;
+				 		document.getElementById("score_display").textContent = "Current score: " + score;
             
             var prevBallX = ballX - ballSpeedX
             var prevBallY = ballY - ballSpeedY
