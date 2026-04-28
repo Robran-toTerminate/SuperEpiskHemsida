@@ -4,18 +4,24 @@
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
 	<style>
-		body {
-			background-color : "black";
-		}
+		body {background: linear-gradient(
+  	  to bottom right, #03ecfc 0%, #034efc 50%, #034efc 50%, #000000 100%);}
+
 		
 		h1 {
 			white-space: pre-line;
 		}
 		nav {
-			position: absolute;
-			left: 900px;
-			top: 150px;
-		}
+		position: absolute;
+		left: 900px;
+		top: 150px;
+		background-color : #03ecfc;
+		border-radius:10px;
+		padding = 5px;
+		width: 600px;
+		height: 600px;
+		padding-left: 10px;
+				}
 
 	</style>
 </head>
@@ -35,7 +41,15 @@
 
 
 <canvas id="gameCanvas" width="800" height="600"></canvas>
+	
 
+
+<h2 id="nameDisplay">
+	Playing As:
+	</h2>
+	<button onclick='	playerName = prompt("What is your name?"); if (playerName == null) {playerName = "Anonymous"} else {localStorage.setItem("playerName", playerName)};document.getElementById("nameDisplay").textContent = "Playing as: " + playerName;'>
+	Change Name
+	</button>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.43.4/dist/umd/supabase.min.js"></script>
 
@@ -94,8 +108,12 @@
 			}
 
 var score = 0;
-var playerName = prompt("What is your name?"); if (playerName == null) {playerName = "Anonymous"};
 
+var playerName = localStorage.getItem("playerName")
+if (playerName == null){
+	playerName = prompt("What is your name?"); if (playerName == null) {playerName = "Anonymous"} else {localStorage.setItem("playerName", playerName)};
+}
+document.getElementById("nameDisplay").textContent = "Playing as: " + playerName
 
 var lastWallBounce = 0
 
